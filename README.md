@@ -129,7 +129,7 @@ NetLab/
 │
 ├── README.md
 ├── topology.png
-└── [Archivo de simulación].pkt
+└── NetLab-Enterprise-Network.pkt
 ```
 
 ## 🚀 Cómo utilizar el proyecto
