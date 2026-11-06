@@ -1,3 +1,4 @@
+
 # 🌐 NetLab — Enterprise Network Infrastructure Lab
 
 **Laboratorio de infraestructura de red empresarial desarrollado en Cisco Packet Tracer.**
@@ -14,22 +15,14 @@ El proyecto permite aplicar conceptos fundamentales de networking, routing, swit
 
 *Topología lógica de la infraestructura empresarial implementada en Cisco Packet Tracer.*
 
-## 🎯 Objetivos del proyecto
-
-- Diseñar e implementar una infraestructura de red empresarial segmentada mediante VLAN.
-- Configurar comunicación entre diferentes redes y departamentos.
-- Implementar enrutamiento dinámico y servicios de asignación automática de direcciones IP.
-- Centralizar servicios de red para los distintos segmentos.
-- Configurar conectividad hacia redes externas mediante NAT/PAT.
-- Aplicar mecanismos de seguridad y control de acceso.
-- Realizar pruebas de conectividad y troubleshooting.
+---
 
 ## 🏢 Segmentación de red — VLAN
 
-La infraestructura está organizada en seis VLAN, permitiendo separar los departamentos y servicios de acuerdo con sus funciones.
+La infraestructura utiliza seis VLAN para separar los departamentos y servicios de la organización.
 
 | VLAN | Departamento / Área | Red |
-|---|---|---|
+|:---:|---|---|
 | 10 | Administración | `192.168.10.0/24` |
 | 20 | Finanzas | `192.168.20.0/24` |
 | 30 | Sucursal Florida | `192.168.30.0/24` |
@@ -39,67 +32,95 @@ La infraestructura está organizada en seis VLAN, permitiendo separar los depart
 
 Esta segmentación permite organizar el tráfico, separar los dominios de broadcast y facilitar la administración de la infraestructura.
 
-## ⚙️ Tecnologías y configuraciones implementadas
+### Distribución de puertos de acceso
 
-### Switching
-- Creación y administración de VLAN.
-- Configuración de enlaces troncales 802.1Q.
-- Comunicación entre switches.
-- Router-on-a-Stick (ROAS) para el enrutamiento inter-VLAN.
+Los puertos de acceso se asignan a las VLAN según el departamento o área correspondiente.
 
-### Routing
-- Enrutamiento dinámico mediante OSPF.
-- Comunicación entre diferentes segmentos de red.
-- DHCP Relay para la comunicación con el servidor DHCP centralizado.
-- NAT/PAT para la traducción de direcciones y salida hacia redes externas.
+| Switch / Área | Rango de interfaces | VLAN |
+|---|---|:---:|
+| Administración | Fa0/1 – Fa0/10 | 10 |
+| Finanzas | Fa0/1 – Fa0/10 | 20 |
+| Piso 1 – R&D | Fa0/1 – Fa0/8 | 40 |
+| Piso 1 – S&M | Fa0/9 – Fa0/14 | 50 |
+| Piso 1 – Servidores | Fa0/15 – Fa0/20 | 60 |
+| Piso 2 – R&D | Fa0/1 – Fa0/8 | 40 |
+| Piso 2 – S&M | Fa0/9 – Fa0/16 | 50 |
+| Piso 3 – R&D | Fa0/1 – Fa0/10 | 40 |
+| Piso 3 – S&M | Fa0/11 – Fa0/14 | 50 |
 
-### Servicios de red
-- DHCP: asignación dinámica de direcciones IP.
-- DNS: resolución de nombres de dominio.
-- HTTP: servicio web interno.
-- Email: envío y recepción de correo electrónico.
-- NTP: sincronización horaria.
-- TFTP: transferencia de archivos y soporte para respaldos de configuraciones.
+### Enlaces troncales
+
+Los enlaces entre switches utilizan troncales 802.1Q para transportar el tráfico de las VLAN correspondientes.
+
+| Interfaces | Función |
+|---|---|
+| Fa0/21 – Fa0/22 | Enlaces entre switches |
+| Fa0/23 – Fa0/24 | Enlaces entre switches |
+
+---
 
 ## 🖥️ Infraestructura de servidores
 
-Los servicios se encuentran centralizados en la VLAN 60.
+Los servicios de red se encuentran centralizados en la VLAN 60, permitiendo su disponibilidad para los distintos segmentos de la infraestructura.
 
 | Servicio | Dirección IP | Función |
 |---|---|---|
 | DHCP | `192.168.60.4` | Asignación dinámica de direcciones IP |
-| DNS | `192.168.60.5` | Resolución de nombres |
+| DNS | `192.168.60.5` | Resolución de nombres de dominio |
 | HTTP | `192.168.60.6` | Alojamiento del sitio web interno |
-| Email | `192.168.60.7` | Servicio de correo electrónico |
+| Email | `192.168.60.7` | Envío y recepción de correo electrónico |
 | NTP | `192.168.60.2` | Sincronización horaria |
-| TFTP | `192.168.60.3` | Transferencia de archivos |
+| TFTP | `192.168.60.3` | Transferencia de archivos y respaldos |
+
+---
+
+## ⚙️ Tecnologías y configuraciones implementadas
+
+### Switching
+
+- Creación y administración de VLAN.
+- Configuración de enlaces troncales IEEE 802.1Q.
+- Comunicación entre switches.
+- Router-on-a-Stick (ROAS) para el enrutamiento inter-VLAN.
+
+### Routing
+
+- **Enrutamiento dinámico:** configuración del protocolo **`OSPF`**.
+- Comunicación entre diferentes segmentos de red.
+- DHCP Relay para conectar las redes con el servidor DHCP centralizado.
+- NAT/PAT para la traducción de direcciones y salida hacia redes externas.
+
+---
 
 ## 🧪 Pruebas y validaciones
 
-Durante el desarrollo se realizaron pruebas para verificar el funcionamiento de los componentes de la infraestructura:
+Se realizaron pruebas para verificar el funcionamiento y la conectividad de los componentes de la infraestructura.
 
-- Conectividad entre dispositivos y segmentos de red.
-- Comunicación entre VLAN mediante Router-on-a-Stick.
-- Asignación automática de direcciones IP mediante DHCP.
-- Funcionamiento del servicio DHCP Relay.
-- Resolución de nombres mediante DNS.
-- Acceso al servicio web interno.
-- Envío y respuesta de correos electrónicos.
-- Funcionamiento de los servicios NTP y TFTP.
-- Conectividad entre routers y salida mediante NAT/PAT.
+- **Conectividad:** comunicación entre dispositivos y segmentos de red.
+- **Enrutamiento inter-VLAN:** comunicación entre VLAN mediante Router-on-a-Stick.
+- **DHCP y DHCP Relay:** asignación automática de direcciones IP desde el servidor centralizado.
+- **DNS:** resolución de nombres de dominio.
+- **HTTP:** acceso al servicio web interno.
+- **Email:** envío y recepción de correos electrónicos.
+- **NTP y TFTP:** funcionamiento de los servicios de sincronización y transferencia de archivos.
+- **NAT/PAT:** conectividad entre routers y salida hacia redes externas.
+
+---
 
 ## 🔐 Seguridad de red
 
-Como parte de la evolución del laboratorio, se contempla implementar mecanismos adicionales de seguridad:
+La infraestructura contempla mecanismos adicionales para controlar el tráfico y proteger la comunicación entre los diferentes segmentos.
 
-- ACL extendidas para controlar el tráfico entre redes.
-- VPN GRE para establecer conectividad entre la sucursal Florida y la infraestructura principal.
-- Políticas de control de acceso entre departamentos.
+- **ACL extendidas:** control del tráfico entre redes y departamentos.
+- **VPN GRE:** conectividad entre la sucursal Florida y la infraestructura principal.
+- **Control de acceso:** aplicación de políticas de seguridad entre segmentos de red.
+
+---
 
 ## 📌 Estado del proyecto
 
 | Componente | Estado |
-|---|---|
+|---|:---:|
 | Diseño de topología empresarial | ✅ Implementado |
 | Segmentación mediante VLAN | ✅ Implementado |
 | Troncales 802.1Q | ✅ Implementado |
@@ -114,23 +135,7 @@ Como parte de la evolución del laboratorio, se contempla implementar mecanismos
 | VPN GRE — Sucursal Florida | ⏳ Pendiente |
 | Pruebas finales y documentación | ⏳ Pendiente |
 
-## 🛠️ Herramientas utilizadas
-
-- **Cisco Packet Tracer:** diseño, configuración y simulación de la infraestructura.
-- **Cisco IOS:** configuración de routers y switches.
-- **Visual Studio Code:** edición y documentación del proyecto.
-- **Git:** control de versiones.
-- **GitHub:** almacenamiento y publicación del repositorio.
-
-## 📂 Estructura del repositorio
-
-```text
-NetLab/
-│
-├── README.md
-├── topology.png
-└── NetLab-Enterprise-Network.pkt
-```
+---
 
 ## 🚀 Cómo utilizar el proyecto
 
@@ -139,14 +144,6 @@ NetLab/
 3. Abrir el archivo de simulación `.pkt`.
 4. Explorar la topología y las configuraciones de los dispositivos.
 5. Realizar pruebas de conectividad y funcionamiento de los servicios.
-
-## 📈 Próximas mejoras
-
-- Implementación de ACL extendidas.
-- Configuración de VPN GRE entre la sede principal y la sucursal Florida.
-- Pruebas de seguridad y conectividad entre departamentos.
-- Documentación técnica de las configuraciones.
-- Registro de evidencias y resultados de las pruebas.
 
 ---
 
